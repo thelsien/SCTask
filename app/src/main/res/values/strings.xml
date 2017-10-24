@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SCTask</string>
+    <string name="error_search">Error during search.</string>
 </resources>
