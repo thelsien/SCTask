@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
@@ -19,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements MovieSearchAsyncT
 
     private RecyclerView mMoviesListView;
     private ArrayList<Movie> mMovies;
-    private SearchView mSearchView;
+    private MoviesListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +28,13 @@ public class MainActivity extends AppCompatActivity implements MovieSearchAsyncT
         setupMoviesListView();
 
         if (savedInstanceState == null) {
-            new MovieSearchAsyncTask(this).execute("al");
+            // should have queried for popular movies list, this is only used for that the user
+            // is not greeted with an empty screen.
+            new MovieSearchAsyncTask(this).execute("a");
         } else {
             mMovies = savedInstanceState.getParcelableArrayList("movies_list");
-            mMoviesListView.setAdapter(new MoviesListAdapter(mMovies));
+            mAdapter = new MoviesListAdapter(mMovies);
+            mMoviesListView.setAdapter(mAdapter);
         }
     }
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MovieSearchAsyncT
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchView mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
 
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         mSearchView.setSubmitButtonEnabled(true);
@@ -66,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements MovieSearchAsyncT
     @Override
     public void onSearchSuccess(List<Movie> movies) {
         mMovies = (ArrayList<Movie>) movies;
-        mMoviesListView.setAdapter(new MoviesListAdapter(mMovies));
+
+        mAdapter = new MoviesListAdapter(mMovies);
+        mMoviesListView.setAdapter(mAdapter);
     }
 
     @Override

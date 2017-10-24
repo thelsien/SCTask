@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.thelsien.sctask.Config.BASE_URL;
+import static com.thelsien.sctask.Config.BASE_SEARCH_URL;
 
 public class MovieSearchAsyncTask extends AsyncTask<String, Void, List<Movie>> {
 
@@ -29,7 +29,7 @@ public class MovieSearchAsyncTask extends AsyncTask<String, Void, List<Movie>> {
     protected List<Movie> doInBackground(String... queryParams) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(BASE_URL + "&query=" + queryParams[0])
+                .url(BASE_SEARCH_URL + "&query=" + queryParams[0])
                 .build();
 
         try {
