@@ -6,6 +6,7 @@
     <ImageView
         android:id="@+id/iv_poster"
         android:layout_width="match_parent"
+        android:layout_centerInParent="true"
         android:layout_height="match_parent" />
 
     <TextView
@@ -16,7 +17,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@color/budget_background"
-        android:padding="4dp"
+        android:padding="@dimen/budget_padding"
         android:textColor="@color/budget_text" />
 
 </RelativeLayout>
